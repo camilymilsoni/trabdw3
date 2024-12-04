@@ -1,0 +1,83 @@
+{% extends "templates/base.html" %}
+
+{% block content %}
+
+  <div class="card shadow border-2 border-dark-subtle mt-5">
+    <div class="card-header">
+      <div class="d-flex justify-content-center align-items-center text-center">
+        <h3 class="my-2">TAREFAS</h3>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="mx-4">
+        <table id="tabelaTarefas" class="ui celled table hover" style="width:100%">
+          <thead>
+            <tr>
+              <th>Ações</th>
+              <th>Título</th>
+              <th>Descrição</th>
+              <th>Data de Criação</th>
+              <th>Prioridade</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for reg in data %}
+            <tr>
+              <td>                      
+                <a href="/Tarefas/ViewTarefas/{{ reg.id_tarefa }}" title="Visualizar">
+                  <i class="fas fa-search"></i>
+                </a>
+                <a href="/Tarefas/UpdateTarefas/{{ reg.id_tarefa }}" title="Atualizar" style="margin-left: 10px;">
+                  <i class="fas fa-pencil-alt"></i>
+                </a>
+              </td>
+              <td>{{reg.titulo_tarefa}}</td>
+              <td>{{reg.descricao_tarefa}}</td>
+              <td>{{reg.datacriacao_tarefa}}</td>
+              <td>{{reg.prioridade_tarefa}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>         
+      <div class="btn-group mx-4 mb-2">
+        <a href="/Tarefas/InsertTarefas" class="btn" style="background-color: var(--blue-color); color: white !important;">
+            Nova Tarefa
+        </a>
+      </div>
+    </div>
+  </div>
+  <script>
+    window.onload = function () {
+      windowOnLoad();
+      const localErro = "{{ erro }}";
+      if (localErro != "") {
+        alert("[vwTarefas|onload] Servidor retornou o erro:" + localErro);
+      }
+      new DataTable('#tabelaTarefas', {
+        layout: {
+          topStart: 'info',
+          bottom: 'paging',
+          bottomStart: null,
+          bottomEnd: null
+        },
+        language: {
+          emptyTable: "Nenhum registro encontrado",
+          info: 'Mostrando de _START_ até _END_ de _TOTAL_ registros',
+          infoEmpty: 'Nenhum registro encontrado',
+          infoFiltered: '(Filtrados de _MAX_ registros)',
+          zeroRecords: 'Nenhum registro encontrado',
+          search: 'Pesquisar:'
+        },
+        columnDefs: [
+          { target: 3, render: DataTable.render.date('DD/MM/YYYY')},
+          { width: '10%', target: 0},
+          { width: '25%', target: 1},
+          { width: '25%', targets: [2, 3, 4]},
+          { targets: [0, 1, 2, 3, 4], className: 'dt-body-left dt-head-left' }
+        ]
+      });
+    };
+  </script>
+
+{% endblock %}

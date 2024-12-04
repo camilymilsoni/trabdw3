@@ -1,0 +1,86 @@
+<nav class="navbar py-3">
+  <div class="logo_item text-dark">
+    <img src="https://cdn-icons-png.flaticon.com/512/5578/5578816.png" alt="Ícone"></i>ERP Empresarial
+  </div>
+  <div class="navbar_content">
+    <div class="dropdown">
+      <button class="btn btn-link dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class='bx bx-user'></i>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-logout" aria-labelledby="userDropdown">
+        <li>
+          <button class="dropdown-item" onclick="siadLogout()">Logout</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<nav class="sidebar">
+  <div class="menu_content">
+    <ul class="menu_items">
+      <div class="menu_title menu_principal"></div>
+      <li class="item">
+        <a href="/" class="nav_link">
+          <span class="navlink_icon">
+            <i class="bx bx-home-alt"></i>
+          </span>
+          <span class="navlink">Home</span>
+        </a>
+      </li>
+    </ul>
+    <ul class="menu_items">
+      <div class="menu_title menu_empresarial"></div>
+      <li class="item">
+        <div href="#" class="nav_link submenu_item">
+          <span class="navlink_icon">
+            <i class='bx bx-building'></i>
+          </span>
+          <span class="navlink">Empresa</span>
+          <i class="bx bx-chevron-right arrow-left"></i>
+        </div>
+        <ul class="menu_items submenu">
+          <a href="/Empresas/ManutEmpresas" class="nav_link sublink">Manutenção</a>
+        </ul>
+      </li>
+      <li class="item">
+        <div href="#" class="nav_link submenu_item">
+          <span class="navlink_icon">
+            <i class='bx bx-user'></i>
+          </span>
+          <span class="navlink">Funcionário</span>
+          <i class="bx bx-chevron-right arrow-left"></i>
+        </div>
+        <ul class="menu_items submenu">
+          <a href="/Funcionarios/ManutFuncionarios" class="nav_link sublink">Manutenção</a>
+        </ul>
+      </li>
+      <li class="item">
+        <div href="#" class="nav_link submenu_item">
+          <span class="navlink_icon">
+            <i class='bx bx-briefcase'></i>
+          </span>
+          <span class="navlink">Tarefa</span>
+          <i class="bx bx-chevron-right arrow-left"></i>
+        </div>
+        <ul class="menu_items submenu">
+          <a href="/Tarefas/ManutTarefas" class="nav_link sublink">Manutenção</a>
+        </ul>
+      </li>
+    </ul>
+    <ul class="menu_items">
+      <div class="menu_title menu_atribuicoes"></div>
+      <li class="item">
+        <div href="#" class="nav_link submenu_item">
+          <span class="navlink_icon">
+            <i class='bx bx-task'></i>
+          </span>
+          <span class="navlink">Funcionários e <br>suas Tarefas</span>
+          <i class="bx bx-chevron-right arrow-left"></i>
+        </div>
+        <ul class="menu_items submenu">
+          <a href="/FuncionariosTarefas/ManutFuncionariosTarefas" class="nav_link sublink">Manutenção</a>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>

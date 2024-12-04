@@ -1,0 +1,71 @@
+### Necessário para pegar o token
+### Post
+# @name loginAutenticado
+POST http://localhost:40000/Login HTTP/1.1
+content-type: application/json
+
+{    
+    "username": "admin",
+    "password": "admin"
+}
+
+### Seta o token
+@accessToken = {{loginAutenticado.response.body.$.token}}
+@username = {{loginAutenticado.response.body.$.username}}
+
+### teste de inserção de funcionário
+POST http://localhost:40000/InsertFuncionarios HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{    
+    "id_funcionario": 1,
+    "nome_funcionario": "Carlos Fonseca",
+    "salario_funcionario": 2800,
+    "cargo_funcionario": "Auxiliar Geral",
+    "datacontratacao_funcionario": "2015-12-12",
+    "removido_funcionario": false,
+    "id_empresa": 1
+}
+
+### teste de buscar todos os funcionários
+GET http://localhost:40000/GetAllFuncionarios HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{    
+    
+}
+
+### teste de buscar funcionário por ID
+POST http://localhost:40000/GetFuncionarioByID HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{    
+    "id_funcionario": 1
+}
+
+### teste de atualização de funcionário
+POST http://localhost:40000/UpdateFuncionarios HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InF3ZSIsImlhdCI6MTY5MTQzNTg3MSwiZXhwIjoxNjkxNDM2NDcxfQ.hAh0VyRfEXvYmhunlJALD-qda8pYr2zzAHobn1yua20
+
+{    
+    "id_funcionario": 1,
+    "nome_funcionario": "Carlos Fonseca Costa",
+    "salario_funcionario": 2800,
+    "cargo_funcionario": "Auxiliar Geral",
+    "datacontratacao_funcionario": "2015-12-12",
+    "removido_funcionario": false,
+    "id_empresa": 1
+}
+
+### teste de remoção de funcionário
+POST http://localhost:40000/DeleteFuncionarios HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InF3ZSIsImlhdCI6MTY5MTQ5MDg3NCwiZXhwIjoxNjkxNDkxNDc0fQ.1ABhMgWYm8gGKy7q90GOPQpNoY5M1LLzpCltKxFjcEo
+
+{    
+    "id_funcionario": 1
+}

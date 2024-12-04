@@ -1,0 +1,69 @@
+### Necessário para pegar o token    
+### Post  
+# @name loginAutenticado  
+POST http://localhost:40000/Login HTTP/1.1  
+content-type: application/json  
+  
+{      
+    "username": "admin",  
+    "password": "admin"  
+}  
+### Seta o token  
+@accessToken = {{loginAutenticado.response.body.$.token}}  
+@username = {{loginAutenticado.response.body.$.username}}  
+
+
+### teste de buscar todas as tarefas
+GET http://localhost:40000/GetAllTarefas HTTP/1.1  
+content-type: application/json  
+Authorization: Bearer {{accessToken}}  
+
+{      
+    
+}  
+
+### teste de buscar tarefa por ID  
+POST http://localhost:40000/GetTarefaByID HTTP/1.1  
+content-type: application/json  
+Authorization: Bearer {{accessToken}}
+
+{     
+    "id_tarefa": 1  
+}  
+
+### teste de inserção de tarefa
+POST http://localhost:40000/InsertTarefas HTTP/1.1  
+content-type: application/json  
+Authorization: Bearer {{accessToken}}
+  
+{      
+    "id_tarefa": 1,  
+    "titulo_tarefa": "Manutenção do Computador 123", 
+    "descricao_tarefa": "Realizar formatação do sistema operacional",    
+    "datacriacao_tarefa": "2020-05-09",  
+    "prioridade_tarefa": 5,
+    "removido_tarefa": false     
+}  
+
+### teste de atualização de tarefa
+POST http://localhost:40000/UpdateTarefas HTTP/1.1  
+content-type: application/json  
+//Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2NzM0ODE2NDEsInVzZXJuYW1lIjoicXdlIn0.LRKs8uvt-SJ9E9dMGYRkCs7HhMDlqVmwap_zcaoONeQ  
+
+{      
+    "id_tarefa": 1,  
+    "titulo_tarefa": "Manutenção do Computador 123", 
+    "descricao_tarefa": "Realizar formatação do sistema operacional",    
+    "datacriacao_tarefa": "2020-05-09",  
+    "prioridade_tarefa": 8,
+    "removido_tarefa": false   
+}  
+
+### teste de remoção de tarefa
+POST http://localhost:40000/DeleteTarefas HTTP/1.1  
+content-type: application/json  
+//Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2NzM0ODE2NDEsInVzZXJuYW1lIjoicXdlIn0.LRKs8uvt-SJ9E9dMGYRkCs7HhMDlqVmwap_zcaoONeQ  
+
+{      
+    "id_tarefa": 1  
+}  

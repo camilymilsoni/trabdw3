@@ -1,0 +1,124 @@
+{% extends "templates/base.html" %}
+
+{% block content %}
+
+    <div class="card shadow border-2 border-dark-subtle mt-5" x-data="empresaForm()">
+        <div class="card-header">
+            <div class="d-flex justify-content-center align-items-center text-center">
+                <h3 class="my-2 text-uppercase">{{ title }}</h3>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="mx-4">
+                <div class="row my-2">
+                    <div class="col-12">
+                        <div>
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="nome_empresa" class="mb-2">Nome</label>
+                                            <input type="text" class="form-control" id="nome_empresa" x-model="form.nome_empresa" required="required">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="cnpj_empresa" class="mb-2">CNPJ</label>
+                                            <input type="text" class="form-control" id="cnpj_empresa" x-model="form.cnpj_empresa" required="required">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="datacriacao_empresa" class="mb-2">Data de Criação</label>
+                                            <input type="date" class="form-control" id="datacriacao_empresa" x-model="form.datacriacao_empresa" required="required">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="receitaanual_empresa" class="mb-2">Receita Anual</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text" id="basic-addon1">R$</span>
+                                                <input type="number" class="form-control" id="receitaanual_empresa" x-model="form.receitaanual_empresa" required aria-describedby="basic-addon1">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <button type="button" @click="insertForm()" class="btn" style="background-color: var(--blue-color); color: white !important;">Salvar</button>
+                                    <a href="/Empresas/ManutEmpresas" class="btn btn-secondary" role="button" aria-disabled="true">Retornar</a>
+                                </div>
+                            </form>
+                            <div class="mt-2">
+                                <template x-if="message">
+                                    <div :class="messageClass" x-text="message"></div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        window.onload = function () {
+            windowOnLoad();
+            const localErro = "{{ erro }}";
+            if (localErro != "") {
+                alert("[vwEmpresas|onload] Servidor retornou o erro:" + localErro);
+            }
+            $("#nome_empresa").focus();
+        };
+        function empresaForm() {
+            return {
+                form: {
+                    nome_empresa: '',
+                    cnpj_empresa: '',
+                    datacriacao_empresa: '',
+                    receitaanual_empresa: '',
+                    removido_empresa: false
+                },
+                message: '',
+                messageClass: '',
+                async insertForm() {
+                    try {
+                        console.log("Valor na página:", JSON.stringify(this.form))
+                        const response = await fetch('/Empresas/InsertEmpresas', {
+                            method: 'POST',
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify(this.form)
+                        });
+                        const result = await response.json();
+                        console.log("Valor na response:", response);
+                        console.log("Valor na result:", result);
+                        if (result.status === "ok") {
+                            alert("Empresa cadastrada com sucesso!");
+                            this.resetForm();
+                        } else {
+                            const errorData = result.status;
+                            this.message = `Erro! Não foi possível cadastrar a empresa devido ao erro: ${errorData}`;
+                            this.messageClass = 'alert alert-danger';
+                        }
+                    } catch (error) {
+                        this.message = `Erro de conexão: ${
+                            error.message
+                        }`;
+                        this.messageClass = 'alert alert-danger';
+                    }
+                },
+                resetForm() {
+                    this.form = {
+                        nome_empresa: '',
+                        cnpj_empresa: '',
+                        datacriacao_empresa: '',
+                        receitaanual_empresa: '',
+                        removido_empresa: false
+                    };
+                    this.message = false;
+                }
+            };
+        }
+    </script>
+
+{% endblock %}

@@ -1,0 +1,69 @@
+### Necessário para pegar o token    
+### Post  
+# @name loginAutenticado  
+POST http://localhost:40000/Login HTTP/1.1  
+content-type: application/json  
+
+{      
+    "username": "admin",  
+    "password": "admin"  
+}  
+
+### Seta o token  
+@accessToken = {{loginAutenticado.response.body.$.token}}  
+@username = {{loginAutenticado.response.body.$.username}}  
+
+### teste de buscar todas as atribuições de funcionários a tarefas  
+GET http://localhost:40000/GetAllFuncionariosTarefas HTTP/1.1  
+content-type: application/json  
+Authorization: Bearer {{accessToken}}  
+
+{      
+    
+}  
+
+### teste de buscar atribuição por ID  
+POST http://localhost:40000/GetFuncionarioTarefaByID HTTP/1.1  
+content-type: application/json  
+Authorization: Bearer {{accessToken}}  
+
+{     
+    "id_funcionariotarefa": 1  
+}  
+
+### teste de inserção de atribuição  
+POST http://localhost:40000/InsertFuncionariosTarefas HTTP/1.1  
+content-type: application/json  
+Authorization: Bearer {{accessToken}}  
+
+{      
+    "id_funcionario": 1,  
+    "id_tarefa": 1,  
+    "observacao_funcionariotarefa": "Urgente",  
+    "dataatribuicao_funcionariotarefa": "2024-12-01",  
+    "horastrabalhadas_funcionariotarefa": 4  
+}  
+
+### teste de atualização de atribuição  
+POST http://localhost:40000/UpdateFuncionariosTarefas HTTP/1.1  
+content-type: application/json  
+Authorization: Bearer {{accessToken}}  
+
+{      
+    "id_funcionariotarefa": 1,  
+    "id_funcionario": 1,  
+    "id_tarefa": 1,  
+    "observacao_funcionariotarefa": "Revisão",  
+    "dataatribuicao_funcionariotarefa": "2024-12-02",  
+    "horastrabalhadas_funcionariotarefa": 6,  
+    "removido_funcionariotarefa": false  
+}  
+
+### teste de remoção de atribuição  
+POST http://localhost:40000/DeleteFuncionariosTarefas HTTP/1.1  
+content-type: application/json  
+Authorization: Bearer {{accessToken}}  
+
+{      
+    "id_funcionariotarefa": 1  
+}  

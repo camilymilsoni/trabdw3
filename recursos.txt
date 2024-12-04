@@ -1,0 +1,32 @@
+*BACKEND:
+npm i express pg ejs body-parser dotenv jsonwebtoken bcryptjs
+
+*BACKEND .env:
+APP_NAME=ServidorBackend
+
+SECRET_API=9as1%12#xz0#@
+
+DB_NAME=erp_financeiro
+DB_USER=postgres
+DB_PASS=postdba
+DB_HOST=localhost
+DB_PORT=5432
+
+---------------------------------------------------------------
+
+*FRONTEND:
+npm install express cookie-parser express-session dotenv axios moment
+npm install nunjucks chokidar validate.js
+
+*FRONTEND .env:
+port = "30000"
+jwtChave = "345DW3brut1fnd"
+servidorBackend = "http://localhost:40000"
+
+jwtTempoVida = "360"
+jwtRefreshTempoVida = "480" 
+tempoInativoMaximoFront = "120"
+
+caminhoMenuJSON = "../config/menu.json"
+caminhoMensagemErroJSON = "../config/mensagemDeErros.json"
+portServer = ":20100"
