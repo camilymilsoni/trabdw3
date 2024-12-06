@@ -30,22 +30,23 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="cargo_funcionario" class="mb-2">Cargo</label>
                                             <input type="text" class="form-control" id="cargo_funcionario" x-model="form.cargo_funcionario" required="required">
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <div class="form-group">
-                                            <label for="datacontratacao_funcionario" class="mb-2">Data de Contratação</label>
+                                            <label for="datacontratacao_funcionario" class="mb-2">Data Contratação</label>
                                             <input type="date" class="form-control" id="datacontratacao_funcionario" x-model="form.datacontratacao_funcionario" required="required">
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="id_empresa" class="mb-2">Empresa</label>
-                                            <select class="form-select" aria-label="Select" id="id_empresa" x-model="form.id_empresa" name="id_empresa">                                 
+                                            <select class="form-select" aria-label="Select" id="id_empresa" x-model="form.id_empresa" name="id_empresa"> 
+                                                <option value="" disabled selected>Selecione...</option>                                
                                                 {% for reg in empresa %}
                                                     {% if (data.id_empresa === reg.id_empresa) %}                                    
                                                         <option value="{{reg.id_empresa}}">{{reg.nome_empresa}}</option>

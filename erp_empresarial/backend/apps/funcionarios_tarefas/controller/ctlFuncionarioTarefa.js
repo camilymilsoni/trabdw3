@@ -14,7 +14,7 @@ const GetAllFuncionariosTarefas = (req, res) =>
 const GetFuncionarioTarefaByID = (req, res) =>
     (async () => {
         const funcionariotarefaID = parseInt(req.body.id_funcionariotarefa);
-        let registro = await mdlFuncionario.GetFuncionarioTarefaByID(funcionariotarefaID);
+        let registro = await mdlFuncionarioTarefa.GetFuncionarioTarefaByID(funcionariotarefaID);
         res.json({ status: "ok", "registro": registro });
     })();
 

@@ -1,0 +1,147 @@
+{% extends "templates/base.html" %}
+
+{% block content %}
+
+    <div class="card shadow border-2 border-dark-subtle mt-5" x-data="funcionarioTarefaForm()">
+        <div class="card-header">
+            <div class="d-flex justify-content-center align-items-center text-center">
+                <h3 class="my-2 text-uppercase">{{ title }}</h3>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="mx-4">
+                <div class="row my-2">
+                    <div class="col-12">
+                        <div>
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="id_funcionario" class="mb-2">Funcionário</label>
+                                            <select class="form-select" aria-label="Select" id="id_funcionario" x-model="form.id_funcionario" name="id_funcionario">  
+                                                <option value="" disabled selected>Selecione...</option>                                  
+                                                {% for reg in funcionario %}
+                                                    {% if (data.id_funcionario === reg.id_funcionario) %}                                    
+                                                        <option value="{{reg.id_funcionario}}">{{reg.nome_funcionario}}</option>
+                                                    {% else %}
+                                                        <option value="{{reg.id_funcionario}}">{{reg.nome_funcionario}}</option>
+                                                    {% endif %}
+                                                {%endfor%}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="id_tarefa" class="mb-2">Tarefa</label>
+                                            <select class="form-select" aria-label="Select" id="id_tarefa" x-model="form.id_tarefa" name="id_tarefa">  
+                                                <option value="" disabled selected>Selecione...</option>                                  
+                                                {% for reg in tarefa %}
+                                                    {% if (data.id_tarefa === reg.id_tarefa) %}                                    
+                                                        <option value="{{reg.id_tarefa}}">{{reg.titulo_tarefa}}</option>
+                                                    {% else %}
+                                                        <option value="{{reg.id_tarefa}}">{{reg.titulo_tarefa}}</option>
+                                                    {% endif %}
+                                                {%endfor%}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="observacao_funcionariotarefa" class="mb-2">Observação</label>
+                                            <input type="text" class="form-control" id="observacao_funcionariotarefa" x-model="form.observacao_funcionariotarefa" required="required">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="dataatribuicao_funcionariotarefa" class="mb-2">Data de Atribuição</label>
+                                            <input type="date" class="form-control" id="dataatribuicao_funcionariotarefa" x-model="form.dataatribuicao_funcionariotarefa" required="required">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="horastrabalhadas_funcionariotarefa" class="mb-2">Horas Trabalhadas</label>
+                                            <input type="number" class="form-control" id="horastrabalhadas_funcionariotarefa" x-model="form.horastrabalhadas_funcionariotarefa" required="required">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <button type="button" @click="insertForm()" class="btn" style="background-color: var(--blue-color); color: white !important;">Salvar</button>
+                                    <a href="/FuncionariosTarefas/ManutFuncionariosTarefas" class="btn btn-secondary" role="button" aria-disabled="true">Retornar</a>
+                                </div>
+                            </form>
+                            <div class="mt-2">
+                                <template x-if="message">
+                                    <div :class="messageClass" x-text="message"></div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        window.onload = function () {
+            windowOnLoad();
+            const localErro = "{{ erro }}";
+            if (localErro != "") {
+                alert("[vwFuncionariosTarefas|onload] Servidor retornou o erro:" + localErro);
+            }
+            $("#id_funcionario").focus();
+        };
+        function funcionarioTarefaForm() {
+            return {
+                form: {
+                    id_funcionario: '',
+                    id_tarefa: '',
+                    observacao_funcionariotarefa: '',
+                    dataatribuicao_funcionariotarefa: '',
+                    horastrabalhadas_funcionariotarefa: '',
+                    removido_funcionariotarefa: false
+                },
+                message: '',
+                messageClass: '',
+                async insertForm() {
+                    try {
+                        console.log("Valor na página:", JSON.stringify(this.form))
+                        const response = await fetch('/FuncionariosTarefas/InsertFuncionariosTarefas', {
+                            method: 'POST',
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify(this.form)
+                        });
+                        const result = await response.json();
+                        console.log("Valor na response:", response);
+                        console.log("Valor na result:", result);
+                        if (result.status === "ok") {
+                            alert("Atribuição cadastrada com sucesso!");
+                            this.resetForm();
+                        } else {
+                            const errorData = result.status;
+                            this.message = `Erro! Não foi possível cadastrar a atribuição devido ao erro: ${errorData}`;
+                            this.messageClass = 'alert alert-danger';
+                        }
+                    } catch (error) {
+                        this.message = `Erro de conexão: ${
+                            error.message
+                        }`;
+                        this.messageClass = 'alert alert-danger';
+                    }
+                },
+                resetForm() {
+                    this.form = {
+                        id_funcionario: '',
+                        id_tarefa: '',
+                        observacao_funcionariotarefa: '',
+                        dataatribuicao_funcionariotarefa: '',
+                        horastrabalhadas_funcionariotarefa: '',
+                        removido_funcionariotarefa: false
+                    };
+                    this.message = false;
+                }
+            };
+        }
+    </script>
+
+{% endblock %}

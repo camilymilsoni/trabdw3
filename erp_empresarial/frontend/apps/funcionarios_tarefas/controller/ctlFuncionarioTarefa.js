@@ -133,7 +133,7 @@ const viewFuncionariosTarefas = async (req, res) =>
                     });
 
                     const tarefas = await axios.get(
-                        process.env.servidorBackend + "/GetAllTarefass", {
+                        process.env.servidorBackend + "/GetAllTarefas", {
                         headers: {
                           "Content-Type": "application/json",
                           Authorization: `Bearer ${token}` 
@@ -194,7 +194,7 @@ const updateFuncionarioTarefa = async (req, res) =>
                     });
 
                     const tarefas = await axios.get(
-                        process.env.servidorBackend + "/GetAllTarefass", {
+                        process.env.servidorBackend + "/GetAllTarefas", {
                         headers: {
                           "Content-Type": "application/json",
                           Authorization: `Bearer ${token}` 

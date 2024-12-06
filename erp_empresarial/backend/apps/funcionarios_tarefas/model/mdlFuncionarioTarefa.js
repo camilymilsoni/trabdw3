@@ -38,13 +38,14 @@ const InsertFuncionariosTarefas = async (registroPar) => {
         linhasAfetadas = (
             await db.query(
                 `INSERT INTO funcionariotarefa 
-                 VALUES (DEFAULT, $1, $2, $3, $4, $5, DEFAULT)`,
+                 VALUES (DEFAULT, $1, $2, $3, $4, $5, $6)`,
                 [
                     registroPar.id_funcionario,
                     registroPar.id_tarefa,
                     registroPar.observacao_funcionariotarefa,
                     registroPar.dataatribuicao_funcionariotarefa,
                     registroPar.horastrabalhadas_funcionariotarefa,
+                    registroPar.removido_funcionariotarefa,
                 ]
             )
         ).rowCount;
