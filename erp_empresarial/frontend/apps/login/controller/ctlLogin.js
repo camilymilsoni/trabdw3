@@ -43,7 +43,7 @@ const Login = async (req, res) =>
             res.cookie("tempoInativoMaximoFront", process.env.tempoInativoMaximoFront, { sameSite: 'strict' });
             return res.json({ status: "ok", msg: "Login com sucesso!" });
         } else {
-            var parametros = { title: "ERP Financeiro - Login", teste: "'192.168.13.1'", constraint: JSON.stringify(validate.constraints) }
+            var parametros = { title: "ERP Empresarial - Login", teste: "'192.168.13.1'", constraint: JSON.stringify(validate.constraints) }
             res.render("login/view/vwLogin.njk", parametros);
         }
     })();

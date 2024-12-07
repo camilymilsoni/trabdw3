@@ -75,7 +75,8 @@
           { width: '30%', target: 1},
           { width: '20%', targets: [2, 3, 4]},
           { targets: [0, 1, 2, 3, 4], className: 'dt-body-left dt-head-left' },
-          { target: 4, render: DataTable.render.number('.', ',', 2, 'R$ ') }
+          { target: 4, render: DataTable.render.number('.', ',', 2, 'R$ ') },
+          { target: 2, render: DataTable.render.number() }
         ]
       });
     };
