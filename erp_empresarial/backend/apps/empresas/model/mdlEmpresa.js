@@ -74,22 +74,35 @@ const UpdateEmpresas = async (registroPar) => {
 };
 
 const DeleteEmpresas = async (registroPar) => {
-    let linhasAfetadas;
+    let linhasAfetadasEmpresa;
+    let linhasAfetadasFuncionarios;
     let msg = "ok";
 
     try {
-        linhasAfetadas = (
+        linhasAfetadasFuncionarios = (
             await db.query(
-                "UPDATE empresa SET " + "removido_empresa = true " + "WHERE id_empresa = $1",
+                "UPDATE funcionario SET removido_funcionario = true WHERE id_empresa = $1",
+                [registroPar.id_empresa]
+            )
+        ).rowCount;
+
+        linhasAfetadasEmpresa = (
+            await db.query(
+                "UPDATE empresa SET removido_empresa = true WHERE id_empresa = $1",
                 [registroPar.id_empresa]
             )
         ).rowCount;
     } catch (error) {
         msg = "[mdlEmpresa|DeleteEmpresas] " + error.detail;
-        linhasAfetadas = -1;
+        linhasAfetadasEmpresa = -1;
+        linhasAfetadasFuncionarios = -1;
     }
 
-    return { msg, linhasAfetadas };
+    return { 
+        msg, 
+        linhasAfetadasEmpresa, 
+        linhasAfetadasFuncionarios 
+    };
 };
 
 module.exports = {

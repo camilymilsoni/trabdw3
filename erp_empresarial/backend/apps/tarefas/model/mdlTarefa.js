@@ -73,23 +73,36 @@ const UpdateTarefas = async (registroPar) => {
     return { msg, linhasAfetadas };
 };
 
-const DeleteTarefas = async (registroPar) => {
-    let linhasAfetadas;
+const DeleteTarefas = async (tarefaREGPar) => {
+    let linhasAfetadasTarefa;
+    let linhasAfetadasAssociacoes;
     let msg = "ok";
 
     try {
-        linhasAfetadas = (
+        linhasAfetadasAssociacoes = (
             await db.query(
-                "UPDATE tarefa SET " + "removido_tarefa = true " + "WHERE id_tarefa = $1",
-                [registroPar.id_tarefa]
+                "UPDATE funcionariotarefa SET removido_funcionariotarefa = true WHERE id_tarefa = $1",
+                [tarefaREGPar.id_tarefa]
+            )
+        ).rowCount;
+
+        linhasAfetadasTarefa = (
+            await db.query(
+                "UPDATE tarefa SET removido_tarefa = true WHERE id_tarefa = $1",
+                [tarefaREGPar.id_tarefa]
             )
         ).rowCount;
     } catch (error) {
         msg = "[mdlTarefa|DeleteTarefas] " + error.detail;
-        linhasAfetadas = -1;
+        linhasAfetadasTarefa = -1;
+        linhasAfetadasAssociacoes = -1;
     }
 
-    return { msg, linhasAfetadas };
+    return { 
+        msg, 
+        linhasAfetadasTarefa, 
+        linhasAfetadasAssociacoes 
+    };
 };
 
 module.exports = {

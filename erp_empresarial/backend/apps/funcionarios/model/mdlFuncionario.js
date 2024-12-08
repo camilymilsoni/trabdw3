@@ -78,22 +78,35 @@ const UpdateFuncionarios = async (funcionarioREGPar) => {
 };
 
 const DeleteFuncionarios = async (funcionarioREGPar) => {
-    let linhasAfetadas;
+    let linhasAfetadasFuncionario;
+    let linhasAfetadasAssociacoes;
     let msg = "ok";
 
     try {
-        linhasAfetadas = (
+        linhasAfetadasAssociacoes = (
             await db.query(
-                "UPDATE funcionario SET " + "removido_funcionario = true " + "WHERE id_funcionario = $1",
+                "UPDATE funcionariotarefa SET removido_funcionariotarefa = true WHERE id_funcionario = $1",
+                [funcionarioREGPar.id_funcionario]
+            )
+        ).rowCount;
+
+        linhasAfetadasFuncionario = (
+            await db.query(
+                "UPDATE funcionario SET removido_funcionario = true WHERE id_funcionario = $1",
                 [funcionarioREGPar.id_funcionario]
             )
         ).rowCount;
     } catch (error) {
         msg = "[mdlFuncionario|DeleteFuncionarios] " + error.detail;
-        linhasAfetadas = -1;
+        linhasAfetadasFuncionario = -1;
+        linhasAfetadasAssociacoes = -1;
     }
 
-    return { msg, linhasAfetadas };
+    return { 
+        msg, 
+        linhasAfetadasFuncionario, 
+        linhasAfetadasAssociacoes 
+    };
 };
 
 module.exports = {
