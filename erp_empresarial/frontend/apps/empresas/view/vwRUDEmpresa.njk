@@ -24,7 +24,7 @@
                   <div class="col-md-3">
                     <div class="form-group">
                       <label for="cnpj_empresa" class="mb-2">CNPJ</label>
-                      <input type="text" class="form-control" id="cnpj_empresa" x-model="form.cnpj_empresa" required="required" x-bind:disabled="disabled">
+                      <input type="text" class="form-control" id="cnpj_empresa" x-model="form.cnpj_empresa" required="required" x-bind:disabled="disabled" minlength="14" maxlength="14" oninput="this.value = this.value.replace(/\D/g, '').slice(0, 14)">
                     </div>
                   </div>
                   <div class="col-md-3">

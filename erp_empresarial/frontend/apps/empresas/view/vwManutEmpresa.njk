@@ -76,7 +76,15 @@
           { width: '20%', targets: [2, 3, 4]},
           { targets: [0, 1, 2, 3, 4], className: 'dt-body-left dt-head-left' },
           { target: 4, render: DataTable.render.number('.', ',', 2, 'R$ ') },
-          { target: 2, render: DataTable.render.number() }
+          {
+            target: 2,
+            render: function (data, type, row) {
+              if (type === 'display' && data) {
+                return data.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, "$1.$2.$3/$4-$5");
+              }
+                return data;
+            }
+          }
         ]
       });
     };
